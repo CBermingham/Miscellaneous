@@ -8,7 +8,7 @@ import numpy as np
 def weightedAverage(pixel):
     return 0.299*pixel[0] + 0.587*pixel[1] + 0.114*pixel[2]
 
-im = misc.imread('test_image2.jpg')
+im = misc.imread('test_image.jpg')
 
 grey = np.zeros((im.shape[0], im.shape[1]))
 
@@ -23,9 +23,6 @@ if grey.shape[0] < grey.shape[1]:
 else: 
 	grey = grey[:grey.shape[1], :] 
 
-
-#plt.show()
-
 #First projection
 p1 = np.zeros(len(grey))
 for i in range(len(grey)):
@@ -33,18 +30,14 @@ for i in range(len(grey)):
 p1_arr = [p1]*len(grey)
 p1_arr = np.transpose(p1_arr)
 
-
-
-
 #Second projection
 p2 = np.zeros(len(grey)*2 - 1)
 for i in range(len(grey)*2 -1):
-	p2[i] = np.sum(grey.diagonal(i-(len(grey)-1))) * len(grey) /len(grey.diagonal(i-(len(grey)-1)))
+	p2[i] = np.sum(grey.diagonal(i-(len(grey)-1))) * float(len(grey)) /float(len(grey.diagonal(i-(len(grey)-1))))
 
 p2_arr = np.zeros([len(grey), len(grey)])
 for i in range(len(p2_arr)):
 	p2_arr[i] = p2[(len(p2)+1)/2-(i+1):len(p2)-i]
-
 
 #plt.show()
 
@@ -67,13 +60,11 @@ for i in range(len(grey2)):
 
 p4 = np.zeros(len(grey2)*2 -1)
 for i in range(len(grey2)*2 - 1):
-	p4[i] = np.sum(grey2.diagonal(i-(len(grey2)-1))) * len(grey) /len(grey.diagonal(i-(len(grey)-1)))
+	p4[i] = np.sum(grey2.diagonal(i-(len(grey2)-1))) * float(len(grey)) /float(len(grey.diagonal(i-(len(grey)-1))))
 
 p4_arr = np.zeros([len(grey2), len(grey2)])
 for i in range(len(p4_arr)):
 	p4_arr[i] = p4[i:len(p4) - (len(p4)+1)/2 +1 + i]
-
-
 
 projection_sum1 = np.add(p1_arr, p2_arr)
 projection_sum2 = np.add(p3_arr, p4_arr)
@@ -81,7 +72,6 @@ projection_sum = np.add(projection_sum1, projection_sum2)
 
 plt.subplot(3, 2, 1)
 plt.imshow(p1_arr, cmap = cm.Greys_r)
-
 plt.subplot(3, 2, 2)
 plt.imshow(p2_arr, cmap = cm.Greys_r)
 plt.subplot(3, 2, 3)
